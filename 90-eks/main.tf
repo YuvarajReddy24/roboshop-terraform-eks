@@ -34,7 +34,8 @@ module "eks" {
 
   # EKS Managed Node Group(s)
   eks_managed_node_groups = {
-    /* blue = {
+    blue = {
+      create = var.enable_blue
       # Starting on 1.30, AL2023 is the default AMI type for EKS managed node groups
       ami_type       = "AL2023_x86_64_STANDARD"
       kubernetes_version = var.eks_nodegroup_blue_version
@@ -49,20 +50,21 @@ module "eks" {
       max_size     = 10
       desired_size = 2
 
-      taints = {
-        upgrade = {
-          key = "upgrade"
-          value = "true"
-          effect = "NO_SCHEDULE"
-        }
-      }
+      # taints = {
+      #   upgrade = {
+      #     key = "upgrade"
+      #     value = "true"
+      #     effect = "NO_SCHEDULE"
+      #   }
+      # }
 
       labels = {
         nodegroup = "blue"
       }
-    } */
+    }
 
     green = {
+      create = var.enable_green 
       # Starting on 1.30, AL2023 is the default AMI type for EKS managed node groups
       ami_type       = "AL2023_x86_64_STANDARD"
       kubernetes_version = var.eks_nodegroup_green_version
@@ -84,6 +86,10 @@ module "eks" {
       #     effect = "NO_SCHEDULE"
       #   }
       # }
+
+      labels = {
+        nodegroup = "green"
+      }
     }
   }
 
